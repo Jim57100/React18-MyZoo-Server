@@ -15,7 +15,7 @@
     </div>
     <div class="row mb-3">
         <div class="col-12 text-center">
-            <form method="post" action="<?= URL ?>back/admin/connexion" class="form-group">
+            <form method="post" action="<?= URL ?>back/common/connexion" class="form-group">
                 <input type="hidden" name="type" value="login">
                 <input type="text" 
                     name="name/email" 
@@ -32,7 +32,7 @@
                 >
                 <button type="submit" name="submit" class="btn btn-primary mb-3 btn-lg">Log In</button>
             </form>
-            <div class="form-sub-msg"><a href="<?= URL ?>back/admin/forgotten">Forgotten Password?</a></div>
+            <div class="form-sub-msg"><a href="<?= URL ?>back/common/reset">Forgotten Password?</a></div>
         </div>
     </div>
 </div>

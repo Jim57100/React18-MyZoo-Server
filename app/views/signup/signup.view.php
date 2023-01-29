@@ -16,7 +16,7 @@
 </div>
 <div class="row">
     <div class="col-12 d-flex flex-column">
-    <form method="post" action="<?= URL ?>back/admin/connexion">
+    <form method="post" action="<?= URL ?>back/common/connexion">
         <input type="hidden" name="type" value="register">
         <input type="text" name="usersName" 
         placeholder="Full name...">

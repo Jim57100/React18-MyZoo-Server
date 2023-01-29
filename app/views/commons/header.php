@@ -17,16 +17,16 @@
                 <a class="nav-link" href="<?= URL ?>/back/user/login">Home</a>
                 </li>
                 <?php if(!isset($_SESSION['usersId'])) : ?>
-                <li class="nav-item">
-                <a class="nav-link" href="<?= URL ?>/back/user/signup">Sign Up</a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link" href="<?= URL ?>/back/user/login">Login</a>
-                </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="<?= URL ?>/back/user/signup">Sign Up</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="<?= URL ?>/back/user/login">Login</a>
+                    </li>
                 <?php else: ?>
-                <li class="nav-item">
-                <a class="nav-link" href="./app/Controllers/Back/Users.php?q=logout">Logout</a>
-                </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="<?= URL ?>.back/common/connexion?q=logout">Logout</a>
+                    </li>
                 <?php endif; ?>
             </div>
         </div>
@@ -40,17 +40,14 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                <a class="nav-link" href="<?= URL ?>/back/admin/login">Home</a>
-                </li>
                 <?php if(!isset($_SESSION['usersId'])) : ?>
-                <li class="nav-item">
-                <a class="nav-link" href="<?= URL ?>/back/admin/login">Login</a>
-                </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="<?= URL ?>/back/common/login">Login</a>
+                    </li>
                 <?php else: ?>
-                <li class="nav-item">
-                <a class="nav-link" href="./app/Controllers/Back/Users.php?q=logout">Logout</a>
-                </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="<?= URL ?>/back/common/connexion?q=logout">Logout</a>
+                    </li>
                 <?php endif; ?>
             </div>
         </div>

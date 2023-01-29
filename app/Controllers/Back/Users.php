@@ -1,6 +1,6 @@
 <?php
 namespace App\Controllers\Back;
-use App\Models\Back\User;
+use App\Models\Back\UserManager;
 
 require_once './app/helpers/session_helper.php';
 
@@ -9,7 +9,7 @@ class Users {
     private $userModel;
     
     public function __construct(){
-        $this->userModel = new User;
+        $this->userModel = new UserManager;
     }
 
     public function register(){
@@ -64,7 +64,7 @@ class Users {
 
         //Register User
         if($this->userModel->register($data)){
-            redirect("./login.php");
+            redirect("./login");
         }else{
             die("Something went wrong");
         }
@@ -96,11 +96,11 @@ class Users {
                 $this->createUserSession($loggedInUser);
             }else{
                 flash("login", "Password Incorrect");
-                redirect("./login");
+                redirect("../common/login");
             }
         }else{
             flash("login", "No user found");
-            redirect("./login");
+            redirect("../common/login");
         }
     }
 
@@ -109,7 +109,8 @@ class Users {
         $_SESSION['usersId'] = $user->usersId;
         $_SESSION['usersName'] = $user->usersName;
         $_SESSION['usersEmail'] = $user->usersEmail;
-        redirect("./home");
+        echo('ok'); die;
+        redirect("../admin/home");
     }
 
     public function logout()
@@ -134,7 +135,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $init->login();
             break;
         default:
-        redirect("./home"); //?????
+        redirect("./login"); //?????
     }
     
 }else{

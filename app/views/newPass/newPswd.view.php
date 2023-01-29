@@ -1,20 +1,24 @@
 <?php 
-    if(empty($_GET['selector']) || empty($_GET['validator'])){
-        echo 'Could not validate your request!';
-    }else{
-        $selector = $_GET['selector'];
-        $validator = $_GET['validator'];
-        
-        if(ctype_xdigit($selector) && ctype_xdigit($validator)) { ?>
-<?php 
     ob_start();
     include_once './app/helpers/session_helper.php';
 ?>
+<?php 
+     $url= $_SERVER['REQUEST_URI'];  
+     $url_components = parse_url($url);
+     parse_str($url_components['query'], $params);
+    
+     if(!isset($params['selector']) || !isset($params['validator'])){
+        echo 'Could not validate your request!';
+    }else{
+        $selector = $params['selector'];
+        $validator = $params['validator'];
+        
+        if(ctype_xdigit($selector) && ctype_xdigit($validator)) { ?>
     <h1 class="header">Enter New Password</h1>
 
     <?php flash('newReset') ?>
 
-    <form method="post" action="./controllers/ResetPasswords.php">
+    <form method="post" action="<?= URL ?>/back/common/resetCtrl">
         <input type="hidden" name="type" value="reset" />
         <input type="hidden" name="selector" value="<?php echo $selector ?>" />
         <input type="hidden" name="validator" value="<?php echo $validator ?>" />

@@ -1,5 +1,5 @@
 <?php 
-include_once '../commons/header.commons.php';
+    ob_start();
 ?>
 
 <div class="container mt-5">
@@ -16,6 +16,7 @@ include_once '../commons/header.commons.php';
 </div>
 
 <?php 
-include_once '../commons/footer.commons.php';
+    $content = ob_get_clean();
+    require './app/views/commons/template.php';    
 ?>
 

@@ -8,19 +8,14 @@ class UserController {
     
   }
 
-  public function getPageSignUp() 
+  public function getSignUpPage() 
   {
    
-    require_once './app/views/login/signup.php';
-  }
-
-  public function getPageLogin()
-  {
-    require_once './app/views/login/login.php';
+    require_once './app/views/signup/signup.view.php';
   }
   
-  public function getPageHomeUser()
-  {
-    require_once './app/views/home/homeUser.view.php';
-  }
+  // public function getUserHomePage()
+  // {
+  //   require_once './app/views/home/homeUser.view.php';
+  // }
 }

@@ -3,7 +3,7 @@ namespace App\Models\Back;
 use PDO;
 use App\Models\DBConnect\DBConnect;
 
-class User extends DBConnect {
+class UserManager extends DBConnect {
 
     // private $db;
 
@@ -32,7 +32,8 @@ class User extends DBConnect {
     }
 
     //Register User
-    public function register($data){
+    public function register($data)
+    {
         $req = 'INSERT INTO users (usersName, usersEmail, usersUid, usersPwd) 
         VALUES (:name, :email, :Uid, :password)';
         $stmt = $this->getDB()->prepare($req);
@@ -51,7 +52,8 @@ class User extends DBConnect {
     }
 
     //Login user
-    public function login($nameOrEmail, $password){
+    public function login($nameOrEmail, $password)
+    {
         $row = $this->findUserByEmailOrUsername($nameOrEmail, $nameOrEmail);
 
         if($row == false) return false;
@@ -65,7 +67,8 @@ class User extends DBConnect {
     }
 
     //Reset Password
-    public function resetPassword($newPwdHash, $tokenEmail){
+    public function resetPassword($newPwdHash, $tokenEmail)
+    {
         $req = 'UPDATE users SET usersPwd=:pwd WHERE usersEmail=:email';
         $stmt = $this->getDB()->prepare($req);
         $stmt->bindValue(':pwd', $newPwdHash, PDO::PARAM_STR);

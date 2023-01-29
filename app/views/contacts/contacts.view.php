@@ -2,7 +2,7 @@
   use App\Controllers\Back\ContactController;
   $controller = new ContactController();
   $contacts = $controller->getData();
-  include_once '../commons/header.commons.php'
+  ob_start();
   /* <?= $contacts  ?> a mettre dans html si affichage en React */
   ?>
 <div class="container text-center mt-5 mb-5">
@@ -33,10 +33,8 @@
 </div>
 
 <?php 
-
-
-  include_once '../commons/footer.commons.php'
-
+    $content = ob_get_clean();
+    require './app/views/commons/template.php';    
 ?>
 
 
