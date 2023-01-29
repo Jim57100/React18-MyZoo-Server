@@ -3,18 +3,26 @@ namespace App\Models\Back;
 use PDO;
 use App\Models\DBConnect\DBConnect;
 
-class User extends DBConnect
-{
+class User extends DBConnect {
+
+    // private $db;
+
+    public function __construct(){
+        // $this->db = new Database;
+    }
 
     //Find user by email or username
     public function findUserByEmailOrUsername($email, $username){
-        $req = ('SELECT * FROM users WHERE usersUid = :username OR usersEmail = :email');
+        $req = 'SELECT * FROM users WHERE usersUid = :username OR usersEmail = :email';
         $stmt = $this->getDB()->prepare($req);
         $stmt->bindValue(':username', $username, PDO::PARAM_STR);
-        $stmt->bindValue(':email', $email);
+        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
         $stmt->execute();
-        $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $stmt->closeCursor();
+        $row = $stmt->fetchAll(PDO::FETCH_OBJ);
+        // echo '<pre>';
+        // print_r($stmt->rowCount());
+        // echo '</pre>';
+        // die;
         //Check row
         if($stmt->rowCount() > 0){
             return $row;
@@ -25,8 +33,8 @@ class User extends DBConnect
 
     //Register User
     public function register($data){
-        $req = ('INSERT INTO users (usersName, usersEmail, usersUid, usersPwd) 
-        VALUES (:name, :email, :Uid, :password)');
+        $req = 'INSERT INTO users (usersName, usersEmail, usersUid, usersPwd) 
+        VALUES (:name, :email, :Uid, :password)';
         $stmt = $this->getDB()->prepare($req);
         //Bind values
         $stmt->bindValue(':name', $data['usersName'], PDO::PARAM_STR);
@@ -58,7 +66,7 @@ class User extends DBConnect
 
     //Reset Password
     public function resetPassword($newPwdHash, $tokenEmail){
-        $req = ('UPDATE users SET usersPwd=:pwd WHERE usersEmail=:email');
+        $req = 'UPDATE users SET usersPwd=:pwd WHERE usersEmail=:email';
         $stmt = $this->getDB()->prepare($req);
         $stmt->bindValue(':pwd', $newPwdHash, PDO::PARAM_STR);
         $stmt->bindValue(':email', $tokenEmail, PDO::PARAM_STR);

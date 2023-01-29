@@ -3,7 +3,7 @@ if(!isset($_SESSION)){
     session_start();
 }
 
-function flash($name = '', $message = '', $class = 'form-message form-message-red'){
+function flash($name = '', $message = '', $class = 'alert alert-danger'){
     if(!empty($name)){
         if(!empty($message) && empty($_SESSION[$name])){
             $_SESSION[$name] = $message;
@@ -18,6 +18,6 @@ function flash($name = '', $message = '', $class = 'form-message form-message-re
 }
 
 function redirect($location){
-    header("location: ".$location);
+    header("location: ".URL."back/admin/".$location);
     exit();
 }

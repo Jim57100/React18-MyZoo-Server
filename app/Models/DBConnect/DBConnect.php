@@ -6,7 +6,7 @@ use PDOException;
 
 abstract class DBConnect 
 {
-
+  private $stmt;
   private static $pdo;
 
   private static function setBdd()
@@ -33,4 +33,5 @@ abstract class DBConnect
     header("Content-Type: application/json");
     echo json_encode($info);
   }
+
 }

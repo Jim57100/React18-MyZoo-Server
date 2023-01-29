@@ -7,8 +7,8 @@
         
         if(ctype_xdigit($selector) && ctype_xdigit($validator)) { ?>
 <?php 
-    include_once 'header.php';
-    include_once './helpers/session_helper.php';
+    ob_start();
+    include_once './app/helpers/session_helper.php';
 ?>
     <h1 class="header">Enter New Password</h1>
 
@@ -25,9 +25,11 @@
         <button type="submit" name="submit">Receive Email</button>
     </form>
 
-    <?php 
-    include_once 'footer.php'
-    ?>
+<?php 
+    $content = ob_get_clean();
+    require './app/views/commons/template.php';    
+?>
+
             
 <?php 
     }else{

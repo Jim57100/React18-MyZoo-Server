@@ -8,13 +8,9 @@ class AdminController {
     
   }
 
-  public function getPageIndex()
+  public function getLoginPage()
   {
-    require_once './app/views/login/index.php';
-  }
-
-  public function getPageLogin()
-  {
+   
     require_once './app/views/login/login.php';
   }
 
@@ -22,19 +18,29 @@ class AdminController {
   {
     require_once './app/views/login/signup.php';
   }
-
-  public function getPageNewPassword()
-  {
-    require_once './app/views/login/create-new-password.php';
-  }
-
-  public function getPageResetPassword()
-  {
-    require_once './app/views/login/reset-password.php';
-  }
-
-  public function getUsers()
+  
+  public function getConnexion()
   {
     require_once './app/Controllers/Back/Users.php';
   }
+  
+  public function getAdminHomePage()
+  {
+    require_once './app/views/home/homeAdmin.view.php';
+  }
+  
+  public function getForgottenPage()
+  {
+    require_once './app/views/forgottenPass/forgottenPswd.view.php';
+  }
+  
+    public function getPageNewPassword()
+    {
+      require_once './app/views/newPass/newPswd.view.php';
+    }
+
+    public function getSignUpPage()
+    {
+      require_once './app/views/signup/signup.view.php';
+    }
 }
