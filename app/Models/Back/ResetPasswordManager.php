@@ -15,7 +15,7 @@ class ResetPasswordManager extends DBConnect {
         $stmt = $this->getDB()->prepare($req);
         $stmt->bindValue(':email',$email, PDO::PARAM_STR);
         //Execute
-        if($stmt->execute()){
+        if($stmt->execute()) {
             return true;
         }else{
             return false;

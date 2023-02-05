@@ -67,6 +67,7 @@ try {
           case 'user' : 
             switch($url[2]) {
              case 'signup': $userController->getSignUpPage(); break;
+             case 'home': $userController->getUserHomePage(); break;
              default : throw new Exception("Erreur 404 ! La page n'existe pas !");
             }
               
@@ -75,7 +76,7 @@ try {
               case 'login': $commonController->getLoginPage(); break;
               case 'connexion': $commonController->getConnexion(); break;
               case 'reset': $commonController->getResetPage(); break;
-              case 'resetCtrl': $commonController->getResetController(); break;
+              case 'resetCtrl': $commonController->getResetPasswordsController(); break;
               case 'new': $commonController->getNewPasswordPage(); break;
               default : throw new Exception("Erreur 404 ! La page n'existe pas !");
              }

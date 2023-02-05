@@ -30,7 +30,8 @@ class ResetPasswordsController {
         $this->mail->Password = '9d0ced55afb500';
     }
 
-    public function sendEmail(){
+    public function sendEmail()
+    {
         //Sanitize POST data
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         $usersEmail = trim($_POST['usersEmail']);
@@ -77,16 +78,22 @@ class ResetPasswordsController {
         redirect("../common/reset");
     }
 
-    public function resetPassword(){
+    public function resetPassword()
+    {
         //Sanitize POST data
-        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $selector = htmlspecialchars($_POST['selector']);
+        $validator = htmlspecialchars($_POST['validator']);
+        $pwd = htmlspecialchars($_POST['pwd']);
+        $pwdRepeat = htmlspecialchars($_POST['pwd-repeat']);
+
         $data = [
-            'selector' => trim($_POST['selector']),
-            'validator' => trim($_POST['validator']),
-            'pwd' => trim($_POST['pwd']),
-            'pwd-repeat' => trim($_POST['pwd-repeat'])
+            'selector' => trim($selector),
+            'validator' => trim($validator),
+            'pwd' => trim($pwd),
+            'pwd-repeat' => trim($pwdRepeat)
         ];
-        $url = './new?selector='.$data['selector'].'&validator='.$data['validator'];
+    
+        $url = '../common/new?selector='.$data['selector'].'&validator='.$data['validator'];
 
         if(empty($_POST['pwd'] || $_POST['pwd-repeat'])){
             flash("newReset", "Please fill out all fields");
@@ -129,7 +136,7 @@ class ResetPasswordsController {
             redirect($url);
         }
 
-        flash("newReset", "Password Updated", 'form-message form-message-green');
+        flash("newReset", "Password Updated, please log-in", 'alert alert-success');
         redirect($url);
     }
 }

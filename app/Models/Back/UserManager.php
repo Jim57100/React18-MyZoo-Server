@@ -5,12 +5,6 @@ use App\Models\DBConnect\DBConnect;
 
 class UserManager extends DBConnect {
 
-    // private $db;
-
-    public function __construct(){
-        // $this->db = new Database;
-    }
-
     //Find user by email or username
     public function findUserByEmailOrUsername($email, $username){
         $req = 'SELECT * FROM users WHERE usersUid = :username OR usersEmail = :email';
@@ -19,10 +13,7 @@ class UserManager extends DBConnect {
         $stmt->bindValue(':email', $email, PDO::PARAM_STR);
         $stmt->execute();
         $row = $stmt->fetchAll(PDO::FETCH_OBJ);
-        // echo '<pre>';
-        // print_r($stmt->rowCount());
-        // echo '</pre>';
-        // die;
+
         //Check row
         if($stmt->rowCount() > 0){
             return $row;
@@ -34,14 +25,15 @@ class UserManager extends DBConnect {
     //Register User
     public function register($data)
     {
-        $req = 'INSERT INTO users (usersName, usersEmail, usersUid, usersPwd) 
-        VALUES (:name, :email, :Uid, :password)';
+        $req = 'INSERT INTO users (usersName, usersEmail, usersUid, usersPwd, role) 
+        VALUES (:name, :email, :Uid, :password, :role)';
         $stmt = $this->getDB()->prepare($req);
         //Bind values
         $stmt->bindValue(':name', $data['usersName'], PDO::PARAM_STR);
         $stmt->bindValue(':email', $data['usersEmail'], PDO::PARAM_STR);
         $stmt->bindValue(':Uid', $data['usersUid'], PDO::PARAM_STR);
         $stmt->bindValue(':password', $data['usersPwd'], PDO::PARAM_STR);
+        $stmt->bindValue(':role', 'user', PDO::PARAM_STR);
 
         //Execute
         if($stmt->execute()){
@@ -55,17 +47,22 @@ class UserManager extends DBConnect {
     public function login($nameOrEmail, $password)
     {
         $row = $this->findUserByEmailOrUsername($nameOrEmail, $nameOrEmail);
+        // echo '<pre>';
+        // print_r($row[0]->usersPwd);
+        // echo '</pre>';
+        // die;
 
         if($row == false) return false;
 
-        $hashedPassword = $row->usersPwd;
+        $hashedPassword = $row[0]->usersPwd;
+        // echo strlen($hashedPassword); die;
         if(password_verify($password, $hashedPassword)){
             return $row;
         }else{
             return false;
         }
     }
-
+    
     //Reset Password
     public function resetPassword($newPwdHash, $tokenEmail)
     {

@@ -16,40 +16,45 @@ class Users {
         //Process form
         
         //Sanitize POST data
-        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        // $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $usersName = htmlspecialchars($_POST['usersName']);
+        $usersEmail = htmlspecialchars($_POST['usersEmail']);
+        $usersUid = htmlspecialchars($_POST['usersUid']);
+        $usersPwd = htmlspecialchars($_POST['usersPwd']);
+        $pwdRepeat = htmlspecialchars($_POST['pwdRepeat']);
 
         //Init data
         $data = [
-            'usersName' => trim($_POST['usersName']),
-            'usersEmail' => trim($_POST['usersEmail']),
-            'usersUid' => trim($_POST['usersUid']),
-            'usersPwd' => trim($_POST['usersPwd']),
-            'pwdRepeat' => trim($_POST['pwdRepeat'])
+            'usersName' => trim($usersName),
+            'usersEmail' => trim($usersEmail),
+            'usersUid' => trim($usersUid),
+            'usersPwd' => trim($usersPwd),
+            'pwdRepeat' => trim($pwdRepeat)
         ];
 
         //Validate inputs
         if(empty($data['usersName']) || empty($data['usersEmail']) || empty($data['usersUid']) || 
         empty($data['usersPwd']) || empty($data['pwdRepeat'])){
             flash("register", "Please fill out all inputs");
-            redirect("./signup");
+            redirect("../user/signup");
         }
 
         if(!preg_match("/^[a-zA-Z0-9]*$/", $data['usersUid'])){
             flash("register", "Invalid username");
-            redirect("./signup");
+            redirect("../user/signup");
         }
 
         if(!filter_var($data['usersEmail'], FILTER_VALIDATE_EMAIL)){
             flash("register", "Invalid email");
-            redirect("./signup");
+            redirect("../user/signup");
         }
 
         if(strlen($data['usersPwd']) < 6){
             flash("register", "Invalid password");
-            redirect("../signup.php");
+            redirect("../user/signup");
         } else if($data['usersPwd'] !== $data['pwdRepeat']){
             flash("register", "Passwords don't match");
-            redirect("./signup");
+            redirect("../user/signup");
         }
 
         //User with the same email or password already exists
@@ -61,10 +66,10 @@ class Users {
         //Passed all validation checks.
         //Now going to hash password
         $data['usersPwd'] = password_hash($data['usersPwd'], PASSWORD_DEFAULT);
-
+   
         //Register User
         if($this->userModel->register($data)){
-            redirect("./login");
+            redirect("../common/login");
         }else{
             die("Something went wrong");
         }
@@ -73,12 +78,13 @@ class Users {
     public function login()
     {
         //Sanitize POST data
-        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $nameOrEmail = htmlspecialchars($_POST['name/email']);
+        $usersPwd = htmlspecialchars($_POST['usersPwd']);
 
         //Init data
         $data=[
-            'name/email' => trim($_POST['name/email']),
-            'usersPwd' => trim($_POST['usersPwd'])
+            'name/email' => trim($nameOrEmail),
+            'usersPwd' => trim($usersPwd)
         ];
      
         if(empty($data['name/email']) || empty($data['usersPwd'])){
@@ -106,10 +112,10 @@ class Users {
 
     public function createUserSession($user)
     {
-        $_SESSION['usersId'] = $user->usersId;
-        $_SESSION['usersName'] = $user->usersName;
-        $_SESSION['usersEmail'] = $user->usersEmail;
-        echo('ok'); die;
+        $_SESSION['usersId'] = $user[0]->usersId;
+        $_SESSION['usersName'] = $user[0]->usersName;
+        $_SESSION['usersEmail'] = $user[0]->usersEmail;
+        // echo('ok'); die;
         redirect("../admin/home");
     }
 
@@ -139,7 +145,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     }
     
 }else{
-    switch($_GET['q']){
+    $url= $_SERVER['REQUEST_URI'];  
+    $url_components = parse_url($url);
+    parse_str($url_components['query'], $params);
+
+    switch($params){
         case 'logout':
             $init->logout();
             break;
